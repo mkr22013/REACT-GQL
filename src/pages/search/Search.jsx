@@ -1,5 +1,5 @@
 import { gql, useLazyQuery } from "@apollo/client";
-import React, { useState, useId } from "react";
+import React, { useState } from "react";
 import "./search.css";
 import Spinner from "../Spinner/Spinner";
 import DisplayCharacters from "../DisplayCharacters/DisplayCharacters";
@@ -33,9 +33,11 @@ function Search() {
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
-      <button onClick={() => getLocations({ variables: { name } })}>
-        Search
-      </button>
+      <div className="btnDiv">
+        <button onClick={() => getLocations({ variables: { name } })}>
+          Search
+        </button>
+      </div>
       {loading && (
         <div>
           <Spinner />

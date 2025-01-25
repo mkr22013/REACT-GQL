@@ -9,3 +9,21 @@
 .Character-episode {
   margin-top: 2rem;
 }
+
+.Heading {
+  font-weight: bold;
+  font-size: 40px;
+  font-family: sans-serif;
+  color: blue;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.Character {
+  display: flex;
+  justify-content: space-evenly;
+  font-family: sans-serif;
+  border: 4px solid;
+  padding: 15px;
+}

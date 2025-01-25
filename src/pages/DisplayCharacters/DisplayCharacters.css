@@ -8,8 +8,19 @@
 
 .Heading {
   font-weight: bold;
-  font-size: larger;
+  font-size: 40px;
+  font-family: sans-serif;
+  color: blue;
   margin: 10px;
   display: flex;
   justify-content: center;
+}
+
+.Link {
+  font-size: 15px;
+  font-family: sans-serif;
+  color: blue;
+  width: 20%;
+  padding: 5px;
+  text-align: center;
 }

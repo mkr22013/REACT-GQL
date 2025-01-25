@@ -1,8 +1,6 @@
 import React from "react";
 import useCharacters from "../../hooks/useCharacters";
-
 import Spinner from "../Spinner/Spinner";
-import "./CharactersList.css";
 import DisplayCharacters from "../DisplayCharacters/DisplayCharacters";
 
 function CharactersList() {
