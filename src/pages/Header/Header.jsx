@@ -5,6 +5,12 @@ function Header() {
   return (
     <header className="bg-blue-500 text-white p-5">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
+        {/* Logo */}
+        <div className="flex items-center">
+          <span className="self-center text-xl font-semibold whitespace-nowrap">
+            GraphQL Demo
+          </span>
+        </div>
         {/* Links & Actions */}
         <nav className={"sm:flex space-x-8"}>
           <Link
