@@ -16,6 +16,7 @@ function App() {
         <Route strict exact path="/search" Component={Search} />
         <Route strict exact path="/:id" Component={Character} />
         <Route strict exact path="/contactus" Component={ContactUs} />
+        <Route strict exact path="*" Component={CharactersList} />
       </Routes>
     </div>
   );

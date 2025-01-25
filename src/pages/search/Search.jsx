@@ -1,8 +1,8 @@
 import { gql, useLazyQuery } from "@apollo/client";
 import React, { useState, useId } from "react";
-import { Link } from "react-router";
 import "./search.css";
 import Spinner from "../Spinner/Spinner";
+import DisplayCharacters from "../DisplayCharacters/DisplayCharacters";
 
 const GET_CHARACTER_LOCATIONS = gql`
   query GetCharacterLocations($name: String!) {
@@ -10,6 +10,7 @@ const GET_CHARACTER_LOCATIONS = gql`
       results {
         id
         image
+        name
         location {
           name
         }
@@ -41,17 +42,7 @@ function Search() {
         </div>
       )}
       {error && <div>Something went wrong...</div>}
-      {data &&
-        data.characters.results.map((character) => {
-          return (
-            <div key={character.id + 1} className="list">
-              <Link key={character.id} to={`/${character.id}`}>
-                <img src={character.image} />
-                <p>{character.location.name}</p>
-              </Link>
-            </div>
-          );
-        })}
+      {data && <DisplayCharacters data={data} />}
     </div>
   );
 }
