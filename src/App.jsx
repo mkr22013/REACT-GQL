@@ -1,5 +1,7 @@
 import { useState } from "react";
-import CharactersList from "./pages/CharactersList";
+import CharactersList from "./pages/characters/CharactersList";
+import { Route, Routes } from "react-router-dom";
+import Character from "./pages/character/Character";
 import "./App.css";
 
 function App() {
@@ -7,7 +9,10 @@ function App() {
 
   return (
     <div className="App">
-      <CharactersList />
+      <Routes>
+        <Route strict exact path="/" Component={CharactersList} />
+        <Route strict exact path="/:id" Component={Character} />
+      </Routes>
     </div>
   );
 }
