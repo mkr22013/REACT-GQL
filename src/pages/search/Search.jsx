@@ -1,5 +1,5 @@
 import { gql, useLazyQuery } from "@apollo/client";
-import React, { useState, useef } from "react";
+import React, { useState, useId } from "react";
 import { Link } from "react-router";
 import "./search.css";
 import Spinner from "../Spinner/Spinner";
@@ -28,7 +28,7 @@ function Search() {
     <div>
       <input
         type="text"
-        placeholder="Type the search text..."
+        placeholder="Search characters multiverse locations..."
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
@@ -37,27 +37,23 @@ function Search() {
       </button>
       {loading && (
         <div>
-          Loading.....
           <Spinner />
         </div>
       )}
       {error && <div>Something went wrong...</div>}
-      {data && (
-        <div>
-          {data.characters.results.map((character) => {
-            return (
-              <div className="list">
-                <div>
-                  <Link to={`/${character.id}`}>
-                    <img src={character.image} />
-                    <p key={character.id}>{character.location.name}</p>
-                  </Link>
-                </div>
+      {data &&
+        data.characters.results.map((character) => {
+          return (
+            <div key={character.id + 1} className="list">
+              <div>
+                <Link key={character.id} to={`/${character.id}`}>
+                  <img src={character.image} />
+                  <p>{character.location.name}</p>
+                </Link>
               </div>
-            );
-          })}
-        </div>
-      )}
+            </div>
+          );
+        })}
     </div>
   );
 }

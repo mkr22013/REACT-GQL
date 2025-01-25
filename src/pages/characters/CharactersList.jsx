@@ -21,7 +21,7 @@ function CharactersList() {
     <div className="CharacterList">
       {data.characters.results.map((character) => {
         return (
-          <Link to={`/${character.id}`}>
+          <Link key={character.id} to={`/${character.id}`}>
             <img src={character.image} />
             <h2>{character.name}</h2>
           </Link>

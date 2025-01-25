@@ -14,7 +14,6 @@ function Character() {
   if (loading)
     return (
       <div>
-        Loading....
         <Spinner />
       </div>
     );
