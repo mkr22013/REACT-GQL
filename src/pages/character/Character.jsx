@@ -2,6 +2,7 @@ import React from "react";
 import { useCharacter } from "../../hooks/useCaracter";
 import "./character.css";
 import { useParams } from "react-router";
+import Spinner from "../Spinner/Spinner";
 
 function Character() {
   const { id } = useParams();
@@ -10,7 +11,13 @@ function Character() {
 
   if (error) return <div>Something went wrong</div>;
 
-  if (loading) return <div>Spinner</div>;
+  if (loading)
+    return (
+      <div>
+        Loading....
+        <Spinner />
+      </div>
+    );
 
   return (
     <div className="Character">

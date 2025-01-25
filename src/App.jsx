@@ -1,9 +1,10 @@
 import { useState } from "react";
-import CharactersList from "./pages/characters/CharactersList";
+import CharactersList from "./pages/Characters/CharactersList";
 import { Route, Routes } from "react-router-dom";
-import Character from "./pages/character/Character";
+import Character from "./pages/Character/Character";
 import "./App.css";
-import Search from "./pages/search/Search";
+import Search from "./pages/Search/Search";
+import ContactUs from "./pages/ContactUs/ContactUs";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -14,6 +15,7 @@ function App() {
         <Route strict exact path="/" Component={CharactersList} />
         <Route strict exact path="/search" Component={Search} />
         <Route strict exact path="/:id" Component={Character} />
+        <Route strict exact path="/contactus" Component={ContactUs} />
       </Routes>
     </div>
   );

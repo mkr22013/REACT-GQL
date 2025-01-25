@@ -1,13 +1,19 @@
 import React from "react";
 import useCharacters from "../../hooks/useCharacters";
 import { Link } from "react-router";
+import Spinner from "../Spinner/Spinner";
 
 function CharactersList() {
   const { error, data, loading } = useCharacters();
 
-  console.log({ error, loading, data });
+  //console.log({ error, loading, data });
 
-  if (loading) return <div>Loading....</div>;
+  if (loading)
+    return (
+      <div>
+        <Spinner />
+      </div>
+    );
 
   if (error) return <div>Something went wrong....</div>;
 
