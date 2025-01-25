@@ -45,12 +45,10 @@ function Search() {
         data.characters.results.map((character) => {
           return (
             <div key={character.id + 1} className="list">
-              <div>
-                <Link key={character.id} to={`/${character.id}`}>
-                  <img src={character.image} />
-                  <p>{character.location.name}</p>
-                </Link>
-              </div>
+              <Link key={character.id} to={`/${character.id}`}>
+                <img src={character.image} />
+                <p>{character.location.name}</p>
+              </Link>
             </div>
           );
         })}

@@ -26,8 +26,9 @@ button {
 }
 
 .list {
+  text-align: center;
+  padding-left: 50px;
   display: flex;
-  margin-left: 2rem;
-  margin-right: 1rem;
+
   float: left;
 }
