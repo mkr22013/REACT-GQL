@@ -5,6 +5,7 @@ import App from "./App.jsx";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { BrowserRouter } from "react-router-dom";
 import Header from "./pages/Header/Header.jsx";
+import MyErrorBoundary from "./pages/ErrorBoundary/ErrorBoundary.jsx";
 
 const client = new ApolloClient({
   uri: "https://rickandmortyapi.com/graphql",
@@ -15,8 +16,10 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <ApolloProvider client={client}>
-        <Header />
-        <App />
+        <MyErrorBoundary>
+          <Header />
+          <App />
+        </MyErrorBoundary>
       </ApolloProvider>
     </BrowserRouter>
   </StrictMode>

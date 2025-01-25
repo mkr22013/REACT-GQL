@@ -7,9 +7,8 @@ import Spinner from "../Spinner/Spinner";
 function Character() {
   const { id } = useParams();
   const { data, loading, error } = useCharacter(id);
-  //console.log(error, loading, data);
 
-  if (error) return <div>Something went wrong</div>;
+  if (error) return <div>{error}</div>;
 
   if (loading)
     return (

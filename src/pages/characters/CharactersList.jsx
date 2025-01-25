@@ -6,8 +6,6 @@ import Spinner from "../Spinner/Spinner";
 function CharactersList() {
   const { error, data, loading } = useCharacters();
 
-  //console.log({ error, loading, data });
-
   if (loading)
     return (
       <div>
