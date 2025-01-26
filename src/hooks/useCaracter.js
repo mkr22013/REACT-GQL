@@ -13,6 +13,7 @@ const GET_CHARACTER = gql`
       episode {
         id
         name
+        episode
       }
       origin {
         id

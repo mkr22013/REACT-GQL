@@ -3,11 +3,14 @@
 }
 
 .Character-content {
-  margin-left: 2rem;
+  margin: 1rem;
+  width: 100vh;
 }
 
 .Character-episode {
   margin-top: 2rem;
+  padding: 1rem;
+  border: 1px dashed;
 }
 
 .Heading {
@@ -15,7 +18,6 @@
   font-size: 40px;
   font-family: sans-serif;
   color: blue;
-  margin: 10px;
   display: flex;
   justify-content: center;
 }
@@ -24,6 +26,11 @@
   display: flex;
   justify-content: space-evenly;
   font-family: sans-serif;
-  border: 4px solid;
+  border: 2px dashed;
   padding: 15px;
+}
+
+.img {
+  width: 600px !important;
+  height: 600px !important;
 }

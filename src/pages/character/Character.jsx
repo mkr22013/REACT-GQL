@@ -18,18 +18,56 @@ function Character() {
     );
 
   return (
-    <div>
+    <div style={{ width: "100vh" }}>
       <div className="Heading">Character's Details</div>
       <div className="Character">
-        <img src={data.character.image} width={750} height={750} />
+        <div style={{ width: "100vh", alignContent: "center" }}>
+          <div style={{ ali: "center", marginBottom: "2px" }}>
+            <p>Name: {data.character.name}</p>
+            <p>Gender: {data.character.gender}</p>
+          </div>
+          <img src={data.character.image} className="img" />
+        </div>
         <div className="Character-content">
-          <h1>{data.character.name}</h1>
-          <p>{data.character.gender}</p>
           <div className="Character-episode">
+            <div
+              style={{
+                textAlign: "center",
+                marginBottom: "3px",
+                color: "blue",
+              }}
+            >
+              <b>Episode's Details</b>
+            </div>
+
             {data.character.episode.map((episode) => {
+              console.log("Episodes details :", episode);
               return (
-                <div key={episode.id}>
-                  {episode.name} -<b>{episode.episode}</b>
+                <div
+                  key={episode.id}
+                  style={{ width: "100%", overflow: "hidden" }}
+                >
+                  <div
+                    style={{
+                      border: "1px dashed",
+                      width: "500px",
+                      float: "left",
+                      paddingLeft: "5px",
+                    }}
+                  >
+                    {episode.name}
+                  </div>
+
+                  <div
+                    style={{
+                      marginLeft: "520px",
+                      paddingLeft: "5px",
+                      paddingRight: "5px",
+                      border: "1px dashed",
+                    }}
+                  >
+                    <b>{episode.episode}</b>
+                  </div>
                 </div>
               );
             })}
