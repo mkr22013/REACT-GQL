@@ -13,16 +13,16 @@ function DisplayCharacters(data) {
             return (
               <Link key={character.id} to={`/${character.id}`} className="Link">
                 <img src={character.image} />
-                <div>
+                <div className="Link" key={character.id}>
                   {character.name}
-                  <div style={{ margin: "1px;" }}>from</div>
+                  <div style={{ margin: "1px" }}>from</div>
                   {character.location.name} Location
                 </div>
               </Link>
             );
           } else {
             return (
-              <div className="Link">
+              <div className="Link" key={character.id}>
                 <Link key={character.id} to={`/${character.id}`}>
                   <img src={character.image} />
                   <h2>{character.name}</h2>
