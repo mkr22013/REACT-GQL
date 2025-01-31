@@ -22,7 +22,7 @@ function Character() {
       <div className="Heading">Character's Details</div>
       <div className="Character">
         <div style={{ width: "100vh", alignContent: "center" }}>
-          <div style={{ ali: "center", marginBottom: "2px" }}>
+          <div style={{ alignItems: "center", marginBottom: "2px" }}>
             <p>Name: {data.character.name}</p>
             <p>Gender: {data.character.gender}</p>
           </div>

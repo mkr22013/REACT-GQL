@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import { gql, useMutation, ApolloClient, InMemoryCache } from "@apollo/client";
-import { useState } from "react";
+// import { useState } from "react";
 
 const courseClient = new ApolloClient({
-  uri: "http://localhost:7227/graphQL/",
+  uri: "http://localhost:5062/graphql/",
   cache: new InMemoryCache(),
 });
 
@@ -39,8 +39,8 @@ export default function Courses() {
 
   const [createCourse, { data, loading, error }] = useMutation(CREATE_COURSE, {
     variables: {
-      name: "Palientology12345",
-      subject: SCIENCE,
+      name: "Palientology999",
+      subject: "SCIENCE",
       instructorId: "4363a05f-d0b1-41dd-a4da-4487a677ebc1",
     },
     client: courseClient,
@@ -57,8 +57,9 @@ export default function Courses() {
     // console.log(cSubject);
     // console.log(cInstructor);
     createCourse();
+    console.log(JSON.stringify(error, null, 2));
 
-    if (error) return <p> Error: {error.message}</p>;
+    // if (error) return <p> Error: {error.message}</p>;
   };
 
   return (

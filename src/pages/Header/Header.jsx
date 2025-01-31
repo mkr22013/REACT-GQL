@@ -25,10 +25,16 @@ function Header() {
               Search
             </Link>
             <Link
-              to={"/Course"}
+              to={"/course"}
               className="hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
             >
               Course
+            </Link>
+            <Link
+              to={"/courses"}
+              className="hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+            >
+              GetAllCources
             </Link>
             <Link
               to="/contactus"
