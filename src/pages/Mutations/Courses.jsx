@@ -1,22 +1,20 @@
 import { useForm } from "react-hook-form";
 import { gql, useMutation, ApolloClient, InMemoryCache } from "@apollo/client";
-// import { useState } from "react";
 
 const courseClient = new ApolloClient({
   uri: "http://localhost:5062/graphql/",
   cache: new InMemoryCache(),
 });
 
-const Subject = {
-  MATH: "Math",
-  SCIENCE: "Science",
-  HISTORY: "History",
-};
 const CREATE_COURSE = gql`
-  mutation createCourse($name: String!, $subject: Int, $instructorId: String!) {
+  mutation createCourse(
+    $name: String!
+    $subject: String!
+    $instructorId: String!
+  ) {
     createCourse(
       courseInput: {
-        Name: $name
+        name: $name
         subject: $subject
         instructorId: $instructorId
       }
@@ -31,35 +29,30 @@ const CREATE_COURSE = gql`
 
 export default function Courses() {
   const { register, handleSubmit } = useForm();
-  //   const [cName, setName] = useState("Palientology1234");
-  //   const [cSubject, setSubject] = useState("SCIENCE");
-  //   const [cInstructor, setInstructor] = useState(
-  //     "4363a05f-d0b1-41dd-a4da-4487a677ebc1"
-  //   );
+  let cName = "";
+  let cSubject = "";
+  let cInstructor = "";
 
   const [createCourse, { data, loading, error }] = useMutation(CREATE_COURSE, {
-    variables: {
-      name: "Palientology999",
-      subject: "SCIENCE",
-      instructorId: "4363a05f-d0b1-41dd-a4da-4487a677ebc1",
-    },
     client: courseClient,
   });
 
   const onSubmit = (d) => {
-    console.log(d);
+    cName = d.CourseName;
+    cSubject = d.CourseSubject;
+    cInstructor = d.CourseInstructor;
 
-    // setName(data.CourseName);
-    // setSubject(data.CourseSubject);
-    // setInstructor(data.CourseInstructor);
+    createCourse({
+      variables: {
+        name: cName,
+        subject: cSubject,
+        instructorId: cInstructor,
+      },
+    });
 
-    // console.log(cName);
-    // console.log(cSubject);
-    // console.log(cInstructor);
-    createCourse();
-    console.log(JSON.stringify(error, null, 2));
-
-    // if (error) return <p> Error: {error.message}</p>;
+    console.log("data:", data);
+    console.log("loading:", loading);
+    console.log("error:", error);
   };
 
   return (
@@ -71,7 +64,6 @@ export default function Courses() {
             type="text"
             id="floating_name"
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            placeholder=" "
           />
           <label
             htmlFor="floating_name"
@@ -86,7 +78,6 @@ export default function Courses() {
             type="text"
             id="floating_subject"
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-nonefocus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            placeholder=" "
           />
           <label
             htmlFor="floating_subject"
@@ -101,7 +92,6 @@ export default function Courses() {
             type="text"
             id="floating_instructor"
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            placeholder=" "
           />
           <label
             htmlFor="floating_instructor"

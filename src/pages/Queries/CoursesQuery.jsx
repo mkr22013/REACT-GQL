@@ -50,7 +50,7 @@ function GetAllCourses() {
           </thead>
           {data.courses.map((course) => {
             return (
-              <tbody>
+              <tbody key={course.id}>
                 <tr className="hover:bg-slate-50">
                   <td className="p-4 border-b border-slate-200">
                     <p className="block text-sm text-slate-800">{course.id}</p>
