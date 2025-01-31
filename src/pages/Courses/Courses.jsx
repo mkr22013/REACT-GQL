@@ -13,11 +13,7 @@ const Subject = {
   HISTORY: "History",
 };
 const CREATE_COURSE = gql`
-  mutation createCourse(
-    $name: String!
-    $subject: Subject.SCIENCE
-    $instructorId: String!
-  ) {
+  mutation createCourse($name: String!, $subject: Int, $instructorId: String!) {
     createCourse(
       courseInput: {
         Name: $name
