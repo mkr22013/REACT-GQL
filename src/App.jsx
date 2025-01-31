@@ -5,6 +5,7 @@ import Character from "./pages/Character/Character";
 import "./App.css";
 import Search from "./pages/Search/Search";
 import ContactUs from "./pages/ContactUs/ContactUs";
+import Cources from "./pages/Courses/Courses";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -15,6 +16,7 @@ function App() {
         <Route strict exact path="/" Component={CharactersList} />
         <Route strict exact path="/search" Component={Search} />
         <Route strict exact path="/:id" Component={Character} />
+        <Route strict exact path="/course" Component={Cources} />
         <Route strict exact path="/contactus" Component={ContactUs} />
         <Route strict exact path="*" Component={CharactersList} />
       </Routes>
