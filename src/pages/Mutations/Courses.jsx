@@ -1,5 +1,15 @@
 import { useForm } from "react-hook-form";
-import { gql, useMutation, ApolloClient, InMemoryCache } from "@apollo/client";
+import {
+  gql,
+  useMutation,
+  ApolloClient,
+  InMemoryCache,
+  NetworkStatus,
+} from "@apollo/client";
+import GetAllCourses from "../Queries/CoursesQuery";
+import { useState } from "react";
+import Spinner from "../Spinner/Spinner";
+import { useApolloClient } from "@apollo/client";
 
 const courseClient = new ApolloClient({
   uri: "http://localhost:5062/graphql/",
@@ -29,6 +39,7 @@ const CREATE_COURSE = gql`
 
 export default function Courses() {
   const { register, handleSubmit } = useForm();
+  const [cources, setCources] = useState(false);
   let cName = "";
   let cSubject = "";
   let cInstructor = "";
@@ -50,9 +61,14 @@ export default function Courses() {
       },
     });
 
-    console.log("data:", data);
-    console.log("loading:", loading);
-    console.log("error:", error);
+    if (loading)
+      return (
+        <div>
+          <Spinner />
+        </div>
+      );
+
+    if (error) return <div>something went wrong....</div>;
   };
 
   return (
@@ -108,6 +124,10 @@ export default function Courses() {
           Submit
         </button>
       </form>
+      <div>
+        <GetAllCourses />
+        {data && <p>Record successfully added...</p>}
+      </div>
     </div>
   );
 }

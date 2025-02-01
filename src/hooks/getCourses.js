@@ -28,16 +28,29 @@ const GET_COURSES = gql`
   }
 `;
 
-function getCourses() {
-  const { data, error, loading } = useQuery(GET_COURSES, {
-    client: courseClient,
-  });
-
-  return {
-    error,
-    data,
-    loading,
-  };
+function getCourses(refresh) {
+  if (refresh) {
+    console.log("fetch from network");
+    const { data, error, loading } = useQuery(GET_COURSES, {
+      client: courseClient,
+      fetchPolicy: "cache-and-network",
+    });
+    return {
+      error,
+      data,
+      loading,
+    };
+  } else {
+    console.log("normal fetch");
+    const { data, error, loading } = useQuery(GET_COURSES, {
+      client: courseClient,
+    });
+    return {
+      error,
+      data,
+      loading,
+    };
+  }
 }
 
 export default getCourses;

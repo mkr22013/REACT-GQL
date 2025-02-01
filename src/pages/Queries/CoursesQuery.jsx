@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Spinner from "../Spinner/Spinner";
 import getCourses from "../../hooks/getCourses";
 
 function GetAllCourses() {
-  console.log("Fetching the data for all courses");
-  const { error, data, loading } = getCourses();
+  console.log("Fetching the data for all courses in GetAllCourses component");
+  const { error, data, loading } = getCourses(true);
   console.log("All courses :", data);
 
   if (loading)
