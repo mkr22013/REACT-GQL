@@ -3,7 +3,6 @@ import { Link } from "react-router";
 import "./DisplayCharacters.css";
 
 function DisplayCharacters(data) {
-  console.log("This is from display characters :", data);
   return (
     <div>
       <h1 className="Heading">Character's List</h1>

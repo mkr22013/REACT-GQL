@@ -41,7 +41,7 @@ function Character() {
             </div>
 
             {data.character.episode.map((episode) => {
-              console.log("Episodes details :", episode);
+              //console.log("Episodes details :", episode);
               return (
                 <div
                   key={episode.id}

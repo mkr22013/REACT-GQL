@@ -1,51 +1,34 @@
 import { useForm } from "react-hook-form";
-import {
-  gql,
-  useMutation,
-  ApolloClient,
-  InMemoryCache,
-  NetworkStatus,
-} from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import GetAllCourses from "../Queries/CoursesQuery";
-import { useState } from "react";
 import Spinner from "../Spinner/Spinner";
-import { useApolloClient } from "@apollo/client";
-
-const courseClient = new ApolloClient({
-  uri: "http://localhost:5062/graphql/",
-  cache: new InMemoryCache(),
-});
-
-const CREATE_COURSE = gql`
-  mutation createCourse(
-    $name: String!
-    $subject: String!
-    $instructorId: String!
-  ) {
-    createCourse(
-      courseInput: {
-        name: $name
-        subject: $subject
-        instructorId: $instructorId
-      }
-    ) {
-      id
-      subject
-      name
-      instructorId
-    }
-  }
-`;
+import { useState } from "react";
+import {
+  GET_COURSES,
+  CREATE_COURSE,
+  courseClient,
+} from "../../graphqlQueries/CoursesQueries";
 
 export default function Courses() {
   const { register, handleSubmit } = useForm();
-  const [cources, setCources] = useState(false);
+  const [msg, setMsg] = useState("Initial msg");
+
   let cName = "";
   let cSubject = "";
   let cInstructor = "";
 
   const [createCourse, { data, loading, error }] = useMutation(CREATE_COURSE, {
     client: courseClient,
+    refetchQueries: [{ query: GET_COURSES }],
+    awaitRefetchQueries: true,
+    onCompleted: () => {
+      console.log("Inside data method");
+      setMsg("Record successfully added...");
+      //Now make another call
+    },
+    onError: (error) => {
+      console.error("[Courses.createCourse] error", error);
+    },
   });
 
   const onSubmit = (d) => {
@@ -124,9 +107,10 @@ export default function Courses() {
           Submit
         </button>
       </form>
+
       <div>
         <GetAllCourses />
-        {data && <p>Record successfully added...</p>}
+        {data && <p>{msg}</p>}
       </div>
     </div>
   );

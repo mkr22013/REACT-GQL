@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import CharactersList from "./pages/Characters/CharactersList";
 import { Route, Routes } from "react-router-dom";
 import Character from "./pages/Character/Character";
@@ -10,8 +9,6 @@ import GetAllCourses from "./pages/Queries/CoursesQuery";
 import Courses from "./pages/Mutations/Courses";
 
 function App() {
-  // const [count, setCount] = useState(0);
-
   return (
     <div className="App">
       <Routes>
