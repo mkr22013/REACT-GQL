@@ -3,7 +3,7 @@ import React, { useState } from "react";
 function ContactUs() {
   const [email, setEmail] = useState();
   function SendEmail() {
-    setEmail("Email has been sent successfully");
+    setEmail("Message has been sent successfully");
   }
   return (
     <div className="max-w-7xl mx-auto p-4 md:p-8">
