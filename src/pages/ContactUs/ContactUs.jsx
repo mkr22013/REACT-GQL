@@ -1,124 +1,162 @@
-import React from "react";
-import { Link } from "react-router";
+import React, { useState } from "react";
 
 function ContactUs() {
+  const [email, setEmail] = useState();
+  function SendEmail() {
+    setEmail("Email has been sent successfully");
+  }
   return (
-    <div>
-      <section className="bg-white dark:bg-gray-900">
-        <div className="container px-6 py-12 mx-auto">
+    <div className="max-w-7xl mx-auto p-4 md:p-8">
+      <div className="grid md:grid-cols-2 gap-8 items-start">
+        <div className="bg-gray-50 rounded-lg p-6">
+          <h2 className="text-3xl font-bold text-indigo-900 mb-4">
+            Get in touch
+          </h2>
+          <p className="text-gray-600 mb-8 text-sm">
+            Feel free to contact us and we will get back to you as soon as
+            possible
+          </p>
+
+          <div className="space-y-4">
+            <input
+              type="text"
+              placeholder="Name"
+              className="w-full p-3 rounded-lg bg-white border text-sm border-gray-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none"
+            />
+            <input
+              type="email"
+              placeholder="E-mail"
+              className="w-full p-3 rounded-lg bg-white border text-sm border-gray-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none"
+            />
+            <textarea
+              placeholder="Message"
+              rows={4}
+              className="w-full p-3 rounded-lg bg-white border text-sm border-gray-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none resize-none"
+            ></textarea>
+
+            <button
+              type="button"
+              onClick={() => SendEmail()}
+              className="text-white w-full bg-blue-600 hover:bg-blue-700 text-sm px-4 py-2.5 !mt-6"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16px"
+                height="16px"
+                fill="currentColor"
+                className="mr-2 inline"
+                viewBox="0 0 548.244 548.244"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M392.19 156.054 211.268 281.667 22.032 218.58C8.823 214.168-.076 201.775 0 187.852c.077-13.923 9.078-26.24 22.338-30.498L506.15 1.549c11.5-3.697 24.123-.663 32.666 7.88 8.542 8.543 11.577 21.165 7.879 32.666L390.89 525.906c-4.258 13.26-16.575 22.261-30.498 22.338-13.923.076-26.316-8.823-30.728-22.032l-63.393-190.153z"
+                  clipRule="evenodd"
+                  data-original="#000000"
+                />
+              </svg>
+              Send Message
+            </button>
+          </div>
           <div>
-            <p className="font-medium text-blue-500 dark:text-blue-400">
-              Contact us
-            </p>
+            <h2>{email}</h2>
+          </div>
+        </div>
 
-            <h1 className="mt-2 text-2xl font-semibold text-gray-800 md:text-3xl dark:text-white">
-              Get in touch
-            </h1>
+        <div className="space-y-8">
+          <div className="bg-white rounded-lg p-6 shadow">
+            <h3 className="text-xl font-semibold text-indigo-900 mb-6">
+              Contact Information
+            </h3>
 
-            <p className="mt-3 text-gray-500 dark:text-gray-400">
-              Our friendly team is always here to chat.
-            </p>
+            <div className="space-y-4">
+              <div className="flex items-start space-x-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 fill-indigo-900"
+                  viewBox="0 0 64 64"
+                >
+                  <path
+                    d="M32 0A24.032 24.032 0 0 0 8 24c0 17.23 22.36 38.81 23.31 39.72a.99.99 0 0 0 1.38 0C33.64 62.81 56 41.23 56 24A24.032 24.032 0 0 0 32 0zm0 35a11 11 0 1 1 11-11 11.007 11.007 0 0 1-11 11z"
+                    data-original="#000000"
+                  />
+                </svg>
+                <div>
+                  <h4 className="font-semibold text-gray-900 text-sm mb-1">
+                    Our Location
+                  </h4>
+                  <p className="text-gray-600 text-sm">101st AVE SE</p>
+                  <p className="text-gray-600 text-sm">
+                    Lake Stevens, WA-98258
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 fill-indigo-900"
+                  viewBox="0 0 513.64 513.64"
+                >
+                  <path
+                    d="m499.66 376.96-71.68-71.68c-25.6-25.6-69.12-15.359-79.36 17.92-7.68 23.041-33.28 35.841-56.32 30.72-51.2-12.8-120.32-79.36-133.12-133.12-7.68-23.041 7.68-48.641 30.72-56.32 33.28-10.24 43.52-53.76 17.92-79.36l-71.68-71.68c-20.48-17.92-51.2-17.92-69.12 0L18.38 62.08c-48.64 51.2 5.12 186.88 125.44 307.2s256 176.641 307.2 125.44l48.64-48.64c17.921-20.48 17.921-51.2 0-69.12z"
+                    data-original="#000000"
+                  />
+                </svg>
+                <div>
+                  <h4 className="font-semibold text-gray-900 text-sm mb-1">
+                    Phone Number
+                  </h4>
+                  <p className="text-gray-600 text-sm">+1 (555) 123-4567</p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 fill-indigo-900"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    d="M298.789 313.693c-12.738 8.492-27.534 12.981-42.789 12.981-15.254 0-30.05-4.489-42.788-12.981L3.409 173.82A76.269 76.269 0 0 1 0 171.403V400.6c0 26.278 21.325 47.133 47.133 47.133h417.733c26.278 0 47.133-21.325 47.133-47.133V171.402a75.21 75.21 0 0 1-3.416 2.422z"
+                    data-original="#000000"
+                  />
+                  <path
+                    d="m20.05 148.858 209.803 139.874c7.942 5.295 17.044 7.942 26.146 7.942 9.103 0 18.206-2.648 26.148-7.942L491.95 148.858c12.555-8.365 20.05-22.365 20.05-37.475 0-25.981-21.137-47.117-47.117-47.117H47.117C21.137 64.267 0 85.403 0 111.408a44.912 44.912 0 0 0 20.05 37.45z"
+                    data-original="#000000"
+                  />
+                </svg>
+                <div>
+                  <h4 className="font-semibold text-gray-900 text-sm mb-1">
+                    Email Address
+                  </h4>
+                  <p className="text-gray-600 text-sm">mkr22013@hotmail.com</p>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-12 mt-10 md:grid-cols-2 lg:grid-cols-3">
-            <div>
-              <span className="inline-block p-3 text-blue-500 rounded-full bg-blue-100/80 dark:bg-gray-800">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
-                  />
-                </svg>
-              </span>
-
-              <h2 className="mt-4 text-lg font-medium text-gray-800 dark:text-white">
-                Email
-              </h2>
-              <p className="mt-2 text-gray-500 dark:text-gray-400">
-                Our friendly team is here to help.
-              </p>
-              <p className="mt-2 text-blue-500 dark:text-blue-400">
-                mkr22013@hotmail.com
-              </p>
-            </div>
-
-            <div>
-              <span className="inline-block p-3 text-blue-500 rounded-full bg-blue-100/80 dark:bg-gray-800">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
-                  />
-                </svg>
-              </span>
-
-              <h2 className="mt-4 text-lg font-medium text-gray-800 dark:text-white">
-                Office
-              </h2>
-              <p className="mt-2 text-gray-500 dark:text-gray-400">
-                Come say hello at our office HQ.
-              </p>
-              <p className="mt-2 text-blue-500 dark:text-blue-400">
-                7001 220th ST SW, Mountlake Rerrace, WA, 98043-2124{" "}
-              </p>
-            </div>
-
-            <div>
-              <span className="inline-block p-3 text-blue-500 rounded-full bg-blue-100/80 dark:bg-gray-800">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
-                  />
-                </svg>
-              </span>
-
-              <h2 className="mt-4 text-lg font-medium text-gray-800 dark:text-white">
-                Phone
-              </h2>
-              <p className="mt-2 text-gray-500 dark:text-gray-400">
-                Mon-Fri from 8am to 5pm.
-              </p>
-              <p className="mt-2 text-blue-500 dark:text-blue-400">
-                +1 (555) 000-0000
-              </p>
+          <div className="bg-white rounded-lg p-6 shadow">
+            <h3 className="text-xl font-semibold text-indigo-900 mb-6">
+              Hours of Operation
+            </h3>
+            <div className="space-y-4">
+              <div className="flex justify-between">
+                <span className="text-gray-600 text-sm">Monday - Friday</span>
+                <span className="text-gray-800 text-sm">9:00 AM - 6:00 PM</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600 text-sm">Saturday</span>
+                <span className="text-gray-800 text-sm">
+                  10:00 AM - 4:00 PM
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600 text-sm">Sunday</span>
+                <span className="text-gray-800 text-sm">Closed</span>
+              </div>
             </div>
           </div>
         </div>
-      </section>
-      <div className="btnDiv">
-        <Link to="/" style={{ width: "25%" }}>
-          <button>Home</button>
-        </Link>
       </div>
     </div>
   );

@@ -56,6 +56,15 @@ export default function Courses() {
 
   return (
     <div>
+      <div>
+        <h3
+          className="text-gray-800 text-xl font-bold sm:text-2xl"
+          style={{ textAlign: "center", width: "1100px" }}
+        >
+          Add New Course
+        </h3>
+      </div>
+      <div style={{ padding: "20px" }}></div>
       <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto">
         <div className="relative z-0 w-full mb-5 group">
           <input
