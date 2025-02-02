@@ -21,56 +21,54 @@ function Character() {
     <div style={{ width: "100vh" }}>
       <div className="Heading">Character's Details</div>
       <div className="Character">
-        <div style={{ width: "100vh", alignContent: "center" }}>
-          <div style={{ alignItems: "center", marginBottom: "2px" }}>
+        <div
+          style={{ width: "100vh", alignContent: "top", paddingTop: "50px" }}
+        >
+          <div style={{ marginBottom: "2px", fontFamily: "sans-serif" }}>
             <p>Name: {data.character.name}</p>
             <p>Gender: {data.character.gender}</p>
           </div>
           <img src={data.character.image} className="img" />
         </div>
         <div className="Character-content">
-          <div className="Character-episode">
-            <div
-              style={{
-                textAlign: "center",
-                marginBottom: "3px",
-                color: "blue",
-              }}
-            >
-              <b>Episode's Details</b>
+          <div className="max-w-screen-xl mx-auto px-4 md:px-8">
+            <div className="items-start justify-between md:flex">
+              <div className="max-w-lg">
+                <h3 className="text-gray-800 text-xl font-bold sm:text-2xl">
+                  Episode Details
+                </h3>
+              </div>
             </div>
-
-            {data.character.episode.map((episode) => {
-              //console.log("Episodes details :", episode);
-              return (
-                <div
-                  key={episode.id}
-                  style={{ width: "100%", overflow: "hidden" }}
-                >
-                  <div
-                    style={{
-                      border: "1px dashed",
-                      width: "500px",
-                      float: "left",
-                      paddingLeft: "5px",
-                    }}
-                  >
-                    {episode.name}
-                  </div>
-
-                  <div
-                    style={{
-                      marginLeft: "520px",
-                      paddingLeft: "5px",
-                      paddingRight: "5px",
-                      border: "1px dashed",
-                    }}
-                  >
-                    <b>{episode.episode}</b>
-                  </div>
-                </div>
-              );
-            })}
+            <div className="mt-12 shadow-sm border rounded-lg overflow-x-auto">
+              <table className="w-full table-auto text-sm text-left">
+                <thead className="bg-gray-50 text-gray-600 font-medium border-b">
+                  <tr>
+                    <th className="py-3 px-6">Episode Name</th>
+                    <th className="py-3 px-6">Season-Episodes</th>
+                  </tr>
+                </thead>
+                <tbody className="text-gray-600 divide-y">
+                  {data.character.episode.map((episode) => (
+                    <tr key={episode.id}>
+                      <td
+                        id="name"
+                        value={episode.name}
+                        className="px-6 py-4 whitespace-nowrap"
+                      >
+                        {episode.name}
+                      </td>
+                      <td
+                        id="episode"
+                        value={episode.episode}
+                        className="px-6 py-4 whitespace-nowrap"
+                      >
+                        {episode.episode}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
