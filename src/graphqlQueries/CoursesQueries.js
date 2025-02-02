@@ -48,7 +48,7 @@ export const DELETE_COURSE = gql`
   }
 `;
 export const GET_CHARACTER = gql`
-  query GetCharacter($id: Int!) {
+  query GetCharacter($id: ID!) {
     character(id: $id) {
       id
       name

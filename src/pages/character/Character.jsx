@@ -6,16 +6,16 @@ import Spinner from "../Spinner/Spinner";
 
 function Character() {
   const { id } = useParams();
+  console.log("Character id :", id);
   const { data, loading, error } = useCharacter(id);
-
-  if (error) return <div>{error}</div>;
-
+  console.log("data from character :", data);
   if (loading)
     return (
       <div>
         <Spinner />
       </div>
     );
+  if (error) return <div>{error}</div>;
 
   return (
     <div style={{ width: "100vh" }}>
