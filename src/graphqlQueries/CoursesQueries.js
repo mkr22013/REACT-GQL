@@ -1,4 +1,5 @@
 import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
+
 export const GET_COURSES = gql`
   query getCourses {
     courses {
@@ -21,7 +22,6 @@ export const GET_COURSES = gql`
     }
   }
 `;
-
 export const CREATE_COURSE = gql`
   mutation CreateCourse(
     $name: String!
@@ -42,9 +42,13 @@ export const CREATE_COURSE = gql`
     }
   }
 `;
-
+export const DELETE_COURSE = gql`
+  mutation DeleteCourse($id: String!) {
+    deleteCourse(id: $id)
+  }
+`;
 export const GET_CHARACTER = gql`
-  query GetCharacter($id: ID!) {
+  query GetCharacter($id: Int!) {
     character(id: $id) {
       id
       name
@@ -64,8 +68,7 @@ export const GET_CHARACTER = gql`
     }
   }
 `;
-
-export const courseClient = new ApolloClient({
+export const COURSE_CLIENT = new ApolloClient({
   uri: "http://localhost:5062/graphql/",
   cache: new InMemoryCache(),
 });

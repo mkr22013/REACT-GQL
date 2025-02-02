@@ -1,10 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import Spinner from "../Spinner/Spinner";
 import getCourses from "../../hooks/getCourses";
+import { useMutation } from "@apollo/client";
+import {
+  DELETE_COURSE,
+  GET_COURSES,
+  COURSE_CLIENT,
+} from "../../graphqlQueries/CoursesQueries";
 
 function GetAllCourses() {
-  var { error, data, loading } = getCourses();
+  const { error, data, loading } = getCourses();
+  const [msg, setMsg] = useState("");
 
+  const [deleteCourse] = useMutation(DELETE_COURSE, {
+    client: COURSE_CLIENT,
+    refetchQueries: [{ query: GET_COURSES }],
+    awaitRefetchQueries: true,
+    onCompleted: () => {
+      setMsg("Record successfully deleted...");
+    },
+    onError: (error) => {
+      console.error("[GetAllCourses.deleteCourse] error", error);
+    },
+  });
+
+  function DeleteCourse(id) {
+    console.log(id);
+    //set previous message clear
+    deleteCourse({
+      variables: {
+        id: id,
+      },
+    });
+  }
   if (loading)
     return (
       <div>
@@ -39,14 +67,34 @@ function GetAllCourses() {
               </tr>
             </thead>
             <tbody className="text-gray-600 divide-y">
-              {data.courses.map((course, idx) => (
-                <tr key={idx}>
-                  <td className="px-6 py-4 whitespace-nowrap">{course.id}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+              {data.courses.map((course) => (
+                <tr key={course.id}>
+                  <td
+                    id="courseId"
+                    value={course.id}
+                    className="px-6 py-4 whitespace-nowrap"
+                  >
+                    {course.id}
+                  </td>
+                  <td
+                    id="courseInstructorId"
+                    value={course.instructorId}
+                    className="px-6 py-4 whitespace-nowrap"
+                  >
                     {course.instructorId}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">{course.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td
+                    id="courseName"
+                    value={course.name}
+                    className="px-6 py-4 whitespace-nowrap"
+                  >
+                    {course.name}
+                  </td>
+                  <td
+                    id="courseSubject"
+                    value={course.subject}
+                    className="px-6 py-4 whitespace-nowrap"
+                  >
                     {course.subject}
                   </td>
                   <td className="text-right px-6 whitespace-nowrap">
@@ -57,6 +105,7 @@ function GetAllCourses() {
                       Edit
                     </a>
                     <a
+                      onClick={(e) => DeleteCourse(course.id)}
                       href="#"
                       className="py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg"
                     >
@@ -67,6 +116,17 @@ function GetAllCourses() {
               ))}
             </tbody>
           </table>
+        </div>
+        <div
+          style={{
+            font: "message-box",
+            color: "blue",
+            fontFamily: "sans-serif",
+            fontSize: "13px",
+            margin: "10px",
+          }}
+        >
+          {data && <p>{msg}</p>}
         </div>
       </div>
     </div>
