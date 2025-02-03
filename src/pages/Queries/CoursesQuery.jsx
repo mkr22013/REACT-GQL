@@ -6,13 +6,28 @@ import {
   DELETE_COURSE,
   GET_COURSES,
   COURSE_CLIENT,
+  UPDATE_COURSE,
 } from "../../graphqlQueries/CoursesQueries";
 
 function GetAllCourses() {
   const { error, data, loading } = getCourses();
   const [msg, setMsg] = useState("");
+  const [editStatus, seteditStatus] = useState("");
+  console.log(data);
 
   const [deleteCourse] = useMutation(DELETE_COURSE, {
+    client: COURSE_CLIENT,
+    refetchQueries: [{ query: GET_COURSES }],
+    awaitRefetchQueries: true,
+    onCompleted: () => {
+      setMsg("Record successfully deleted...");
+    },
+    onError: (error) => {
+      console.error("[GetAllCourses.deleteCourse] error", error);
+    },
+  });
+
+  const [updateCourse] = useMutation(UPDATE_COURSE, {
     client: COURSE_CLIENT,
     refetchQueries: [{ query: GET_COURSES }],
     awaitRefetchQueries: true,
@@ -33,6 +48,11 @@ function GetAllCourses() {
       },
     });
   }
+
+  function EditCourse(id) {
+    console.log(id);
+  }
+
   if (loading)
     return (
       <div>
@@ -60,7 +80,7 @@ function GetAllCourses() {
             <thead className="bg-gray-50 text-gray-600 font-medium border-b">
               <tr>
                 <th className="py-3 px-6">Course Id</th>
-                <th className="py-3 px-6">Instructor Id</th>
+                <th className="py-3 px-6">Instructor</th>
                 <th className="py-3 px-6">Course Name</th>
                 <th className="py-3 px-6">Subject</th>
                 <th className="py-3 px-6"></th>
@@ -81,7 +101,7 @@ function GetAllCourses() {
                     value={course.instructorId}
                     className="px-6 py-4 whitespace-nowrap"
                   >
-                    {course.instructorId}
+                    {course.instructor.firstName} {course.instructor.lastName}
                   </td>
                   <td
                     id="courseName"
@@ -99,6 +119,7 @@ function GetAllCourses() {
                   </td>
                   <td className="text-right px-6 whitespace-nowrap">
                     <a
+                      onClick={(e) => EditCourse(course.id)}
                       href="#"
                       className="py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
                     >

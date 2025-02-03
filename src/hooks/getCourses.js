@@ -1,4 +1,4 @@
-import { useQuery, ApolloClient, InMemoryCache } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GET_COURSES, COURSE_CLIENT } from "../graphqlQueries/CoursesQueries";
 
 function getCourses() {

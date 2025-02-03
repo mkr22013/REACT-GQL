@@ -22,6 +22,22 @@ export const GET_COURSES = gql`
     }
   }
 `;
+export const GET_COURSE_BY_ID = gql`
+  query getCourseById($id: ID!) {
+    coursesById(guid: $id) {
+      id
+      name
+      subject
+      instructorId
+      instructor {
+        id
+        firstName
+        lastName
+        salary
+      }
+    }
+  }
+`;
 export const CREATE_COURSE = gql`
   mutation CreateCourse(
     $name: String!
@@ -29,6 +45,26 @@ export const CREATE_COURSE = gql`
     $instructorId: String!
   ) {
     createCourse(
+      courseInput: {
+        name: $name
+        subject: $subject
+        instructorId: $instructorId
+      }
+    ) {
+      id
+      subject
+      name
+      instructorId
+    }
+  }
+`;
+export const UPDATE_COURSE = gql`
+  mutation UpdateCourse(
+    $name: String!
+    $subject: String!
+    $instructorId: String!
+  ) {
+    updateCourse(
       courseInput: {
         name: $name
         subject: $subject
