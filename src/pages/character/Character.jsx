@@ -18,7 +18,7 @@ function Character() {
   if (error) return <div>{error}</div>;
 
   return (
-    <div style={{ width: "100vh" }}>
+    <div>
       <div className="Heading">Character's Details</div>
       <div className="Character">
         <div
