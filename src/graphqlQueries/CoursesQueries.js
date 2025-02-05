@@ -60,11 +60,13 @@ export const CREATE_COURSE = gql`
 `;
 export const UPDATE_COURSE = gql`
   mutation UpdateCourse(
+    $id: String!
     $name: String!
     $subject: String!
     $instructorId: String!
   ) {
     updateCourse(
+      id: $id
       courseInput: {
         name: $name
         subject: $subject

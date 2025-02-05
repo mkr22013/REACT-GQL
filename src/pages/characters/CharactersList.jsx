@@ -8,7 +8,7 @@ function CharactersList() {
 
   if (loading)
     return (
-      <div>
+      <div className="spinner">
         <Spinner />
       </div>
     );

@@ -6,19 +6,24 @@ import { useState, useEffect } from "react";
 import {
   GET_COURSES,
   CREATE_COURSE,
+  UPDATE_COURSE,
   COURSE_CLIENT,
 } from "../../graphqlQueries/CoursesQueries";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { editClicked } from "../Features/Courses/courseSlice";
 
 export default function Courses() {
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { isSubmitSuccessful },
   } = useForm();
-  const editClicked = useSelector((state) => state.editClicked);
-  const [msg, setMsg] = useState("Initial msg");
+  const editStatus = useSelector((state) => state.editStatus);
+  const course = useSelector((state) => state.course);
+  const dispatch = useDispatch();
+  const [msg, setMsg] = useState("");
 
   let cName = "";
   let cSubject = "";
@@ -29,7 +34,6 @@ export default function Courses() {
     refetchQueries: [{ query: GET_COURSES }],
     awaitRefetchQueries: true,
     onCompleted: () => {
-      console.log("Inside data method");
       setMsg("Record successfully created...");
     },
     onError: (error) => {
@@ -37,27 +41,67 @@ export default function Courses() {
     },
   });
 
+  const [updateCourse, { uData, uLoading, uError }] = useMutation(
+    UPDATE_COURSE,
+    {
+      client: COURSE_CLIENT,
+      refetchQueries: [{ query: GET_COURSES }],
+      awaitRefetchQueries: true,
+      onCompleted: () => {
+        setMsg("Record successfully updated...");
+        console.log("in update course completed part");
+        //reset the cache
+        dispatch(editClicked({ courseId: "", text: " " }));
+        console.log("editClicked post update:", editStatus);
+      },
+      onError: (error) => {
+        console.error("[Courses.updateCourse] error", error);
+      },
+    }
+  );
+
   const onSubmit = (d) => {
     cName = d.CourseName;
     cSubject = d.CourseSubject;
     cInstructor = d.CourseInstructor;
+    console.log("editClicked in onSubmit", editStatus);
+    if (editStatus.text === " " || editStatus.text === undefined) {
+      createCourse({
+        variables: {
+          name: cName,
+          subject: cSubject,
+          instructorId: cInstructor,
+        },
+      });
 
-    createCourse({
-      variables: {
-        name: cName,
-        subject: cSubject,
-        instructorId: cInstructor,
-      },
-    });
+      if (loading)
+        return (
+          <div>
+            <Spinner />
+          </div>
+        );
 
-    if (loading)
-      return (
-        <div>
-          <Spinner />
-        </div>
-      );
+      if (error) return <div>something went wrong during create....</div>;
+    } else {
+      console.log("Updating record");
+      updateCourse({
+        variables: {
+          id: editStatus.courseId,
+          name: cName,
+          subject: cSubject,
+          instructorId: cInstructor,
+        },
+      });
 
-    if (error) return <div>something went wrong....</div>;
+      if (uLoading)
+        return (
+          <div>
+            <Spinner />
+          </div>
+        );
+
+      if (uError) return <div>something went wrong during update....</div>;
+    }
   };
 
   useEffect(() => {
@@ -67,15 +111,15 @@ export default function Courses() {
   }, [isSubmitSuccessful, reset]);
 
   useEffect(() => {
-    if (editClicked.text === " " || editClicked.text === undefined) return;
-
-    //TODO:
-    //Make an API call and get the latest data based on course ID and fill the form
-    console.log(
-      "Edit button clicked : ",
-      editClicked.courseId + " " + editClicked.text
-    );
-  }, [editClicked]);
+    if (editStatus.text === " " || editStatus.text === undefined) {
+      console.log("editStatus text value is empty");
+      return;
+    }
+    //Read the store and set the form values
+    setValue("CourseName", course[0].name);
+    setValue("CourseSubject", course[0].subject);
+    setValue("CourseInstructor", course[0].instructorId);
+  }, [editStatus]);
 
   return (
     <div>
@@ -139,7 +183,7 @@ export default function Courses() {
             fontSize: "13px",
           }}
         >
-          {data && <p>{msg}</p>}
+          {(data || uData) && <p>{msg}</p>}
         </div>
         <button
           type="submit"

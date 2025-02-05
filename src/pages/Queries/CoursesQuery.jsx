@@ -6,7 +6,6 @@ import {
   DELETE_COURSE,
   GET_COURSES,
   COURSE_CLIENT,
-  UPDATE_COURSE,
 } from "../../graphqlQueries/CoursesQueries";
 import { useDispatch } from "react-redux";
 import { editClicked } from "../Features/Courses/courseSlice";
@@ -14,10 +13,8 @@ import { editClicked } from "../Features/Courses/courseSlice";
 function GetAllCourses() {
   const { error, data, loading } = getCourses();
   const [msg, setMsg] = useState("");
-  const [editStatus, seteditStatus] = useState("");
-  const dispatch = useDispatch();
 
-  console.log(data);
+  const dispatch = useDispatch();
 
   const [deleteCourse] = useMutation(DELETE_COURSE, {
     client: COURSE_CLIENT,
@@ -31,20 +28,7 @@ function GetAllCourses() {
     },
   });
 
-  const [updateCourse] = useMutation(UPDATE_COURSE, {
-    client: COURSE_CLIENT,
-    refetchQueries: [{ query: GET_COURSES }],
-    awaitRefetchQueries: true,
-    onCompleted: () => {
-      setMsg("Record successfully deleted...");
-    },
-    onError: (error) => {
-      console.error("[GetAllCourses.deleteCourse] error", error);
-    },
-  });
-
   function DeleteCourse(id) {
-    console.log(id);
     //set previous message clear
     deleteCourse({
       variables: {
@@ -53,10 +37,15 @@ function GetAllCourses() {
     });
   }
 
-  function EditCourse(id) {
+  const EditCourse = (id) => {
     console.log("Inside edit course function");
-    dispatch(editClicked({ courseId: id, text: "update" }));
-  }
+    const cData = data.courses.filter(function (el) {
+      return el.id === id;
+    });
+    console.log("Filtered data :", cData);
+    console.log("editClicked Before Update :", editClicked);
+    dispatch(editClicked({ courseId: id, text: "update", course: cData }));
+  };
 
   if (loading)
     return (
@@ -124,7 +113,7 @@ function GetAllCourses() {
                   </td>
                   <td className="text-right px-6 whitespace-nowrap">
                     <a
-                      onClick={(e) => EditCourse(course.id)}
+                      onClick={() => EditCourse(course.id)}
                       href="#"
                       className="py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
                     >

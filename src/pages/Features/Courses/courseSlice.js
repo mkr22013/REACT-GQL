@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  editClicked: { courseId: " ", text: " " },
-  courses: [],
+  editStatus: { courseId: " ", text: " " },
+  course: [],
 };
 
 export const courseSlice = createSlice({
@@ -10,7 +10,7 @@ export const courseSlice = createSlice({
   initialState,
   reducers: {
     updateCourse: (state, action) => {
-      state.courses.map((course) => {
+      state.course.map((course) => {
         if (course.id == action.payload.id) {
           course.name = action.payload.name;
           course.subject = action.payload.subject;
@@ -26,7 +26,8 @@ export const courseSlice = createSlice({
         text: action.payload.text,
       };
 
-      state.editClicked = temp;
+      state.editStatus = temp;
+      state.course = action.payload.course;
     },
   },
 });
