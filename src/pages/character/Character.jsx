@@ -19,7 +19,7 @@ function Character() {
 
   return (
     <div>
-      <div className="Heading">Character's Details</div>
+      <div className="Heading">Details About Character</div>
       <div className="Character">
         <div
           style={{ width: "100vh", alignContent: "top", paddingTop: "50px" }}
@@ -32,12 +32,10 @@ function Character() {
         </div>
         <div className="Character-content">
           <div className="max-w-screen-xl mx-auto px-4 md:px-8">
-            <div className="items-start justify-between md:flex">
-              <div className="max-w-lg">
-                <h3 className="text-gray-800 text-xl font-bold sm:text-2xl">
-                  Episode Details
-                </h3>
-              </div>
+            <div className="max-w-lg text-center">
+              <h3 className="text-gray-800 text-xl font-bold sm:text-2xl">
+                Episode Details
+              </h3>
             </div>
             <div className="mt-12 shadow-sm border rounded-lg overflow-x-auto">
               <table className="w-full table-auto text-sm text-left">

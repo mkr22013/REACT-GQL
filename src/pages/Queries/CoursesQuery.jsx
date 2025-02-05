@@ -8,11 +8,15 @@ import {
   COURSE_CLIENT,
   UPDATE_COURSE,
 } from "../../graphqlQueries/CoursesQueries";
+import { useDispatch } from "react-redux";
+import { editClicked } from "../Features/Courses/courseSlice";
 
 function GetAllCourses() {
   const { error, data, loading } = getCourses();
   const [msg, setMsg] = useState("");
   const [editStatus, seteditStatus] = useState("");
+  const dispatch = useDispatch();
+
   console.log(data);
 
   const [deleteCourse] = useMutation(DELETE_COURSE, {
@@ -50,7 +54,8 @@ function GetAllCourses() {
   }
 
   function EditCourse(id) {
-    console.log(id);
+    console.log("Inside edit course function");
+    dispatch(editClicked({ courseId: id, text: "update" }));
   }
 
   if (loading)

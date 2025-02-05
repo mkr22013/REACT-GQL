@@ -57,7 +57,15 @@ function ContactUs() {
               Send Message
             </button>
           </div>
-          <div>
+          <div
+            style={{
+              font: "message-box",
+              color: "blue",
+              fontFamily: "sans-serif",
+              fontSize: "13px",
+              margin: "10px",
+            }}
+          >
             <h2>{email}</h2>
           </div>
         </div>

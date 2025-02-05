@@ -8,6 +8,7 @@ import {
   CREATE_COURSE,
   COURSE_CLIENT,
 } from "../../graphqlQueries/CoursesQueries";
+import { useSelector } from "react-redux";
 
 export default function Courses() {
   const {
@@ -16,6 +17,7 @@ export default function Courses() {
     reset,
     formState: { isSubmitSuccessful },
   } = useForm();
+  const editClicked = useSelector((state) => state.editClicked);
   const [msg, setMsg] = useState("Initial msg");
 
   let cName = "";
@@ -63,6 +65,17 @@ export default function Courses() {
       reset(); // Clear the form after successful submission
     }
   }, [isSubmitSuccessful, reset]);
+
+  useEffect(() => {
+    if (editClicked.text === " " || editClicked.text === undefined) return;
+
+    //TODO:
+    //Make an API call and get the latest data based on course ID and fill the form
+    console.log(
+      "Edit button clicked : ",
+      editClicked.courseId + " " + editClicked.text
+    );
+  }, [editClicked]);
 
   return (
     <div>
