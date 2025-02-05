@@ -49,10 +49,8 @@ export default function Courses() {
       awaitRefetchQueries: true,
       onCompleted: () => {
         setMsg("Record successfully updated...");
-        console.log("in update course completed part");
         //reset the cache
         dispatch(editClicked({ courseId: "", text: " " }));
-        console.log("editClicked post update:", editStatus);
       },
       onError: (error) => {
         console.error("[Courses.updateCourse] error", error);
@@ -64,7 +62,7 @@ export default function Courses() {
     cName = d.CourseName;
     cSubject = d.CourseSubject;
     cInstructor = d.CourseInstructor;
-    console.log("editClicked in onSubmit", editStatus);
+
     if (editStatus.text === " " || editStatus.text === undefined) {
       createCourse({
         variables: {
@@ -83,7 +81,6 @@ export default function Courses() {
 
       if (error) return <div>something went wrong during create....</div>;
     } else {
-      console.log("Updating record");
       updateCourse({
         variables: {
           id: editStatus.courseId,
@@ -112,7 +109,6 @@ export default function Courses() {
 
   useEffect(() => {
     if (editStatus.text === " " || editStatus.text === undefined) {
-      console.log("editStatus text value is empty");
       return;
     }
     //Read the store and set the form values

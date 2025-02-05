@@ -3,7 +3,6 @@ import { Link } from "react-router";
 import "./DisplayCharacters.css";
 
 function DisplayCharacters(data) {
-  console.log("data from display characters :", data);
   if (data.data.characters.results.length === 0)
     return (
       <div>

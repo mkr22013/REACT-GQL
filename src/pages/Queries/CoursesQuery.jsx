@@ -38,12 +38,10 @@ function GetAllCourses() {
   }
 
   const EditCourse = (id) => {
-    console.log("Inside edit course function");
     const cData = data.courses.filter(function (el) {
       return el.id === id;
     });
-    console.log("Filtered data :", cData);
-    console.log("editClicked Before Update :", editClicked);
+
     dispatch(editClicked({ courseId: id, text: "update", course: cData }));
   };
 
