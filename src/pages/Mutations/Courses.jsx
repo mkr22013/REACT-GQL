@@ -206,7 +206,7 @@ export default function Courses() {
       )}
       {showError && (
         <div>
-          <ErrorPopup message="Something went wrong..." />
+          <ErrorPopup message="Internal Server Error. Please check your input and try again..." />
         </div>
       )}
     </div>

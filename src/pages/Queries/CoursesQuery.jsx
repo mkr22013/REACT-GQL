@@ -10,7 +10,6 @@ import {
 import { useDispatch } from "react-redux";
 import { editClicked } from "../Features/Courses/courseSlice";
 import SuccessModal from "../Popup/Popup";
-import ErrorPopup from "../errorpopup/ErrorPopup";
 
 function GetAllCourses() {
   const [msg, setMsg] = useState("");
@@ -136,7 +135,7 @@ function GetAllCourses() {
         <div>
           {showPopup && (
             <div>
-              <ErrorPopup message={msg} />
+              <SuccessModal message={msg} />
             </div>
           )}
         </div>
