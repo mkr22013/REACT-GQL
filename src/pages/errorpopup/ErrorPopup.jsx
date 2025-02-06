@@ -7,7 +7,7 @@ import {
   DialogFooter,
 } from "@material-tailwind/react";
 
-export default function SuccessModal(props) {
+export default function ErrorPopup(props) {
   const [open, setOpen] = React.useState(true);
 
   const handleOpen = () => setOpen(!open);
@@ -15,12 +15,12 @@ export default function SuccessModal(props) {
   return (
     <div>
       <Dialog open={open} handler={handleOpen}>
-        <DialogHeader>Information</DialogHeader>
+        <DialogHeader>Error</DialogHeader>
         <DialogBody style={{ fontFamily: "serif", fontSize: "20px" }}>
           {props.message}
         </DialogBody>
         <DialogFooter>
-          <Button variant="gradient" color="green" onClick={handleOpen}>
+          <Button variant="gradient" color="red" onClick={handleOpen}>
             <span>Ok</span>
           </Button>
         </DialogFooter>

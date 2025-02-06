@@ -9,7 +9,8 @@ import {
 } from "../../graphqlQueries/CoursesQueries";
 import { useDispatch } from "react-redux";
 import { editClicked } from "../Features/Courses/courseSlice";
-import Modal from "../Popup/Popup";
+import SuccessModal from "../Popup/Popup";
+import ErrorPopup from "../errorpopup/ErrorPopup";
 
 function GetAllCourses() {
   const [msg, setMsg] = useState("");
@@ -31,6 +32,7 @@ function GetAllCourses() {
   });
 
   function DeleteCourse(id) {
+    setShowPopup(false);
     deleteCourse({
       variables: {
         id: id,
@@ -43,7 +45,6 @@ function GetAllCourses() {
     const cData = data.courses.filter(function (el) {
       return el.id === id;
     });
-
     dispatch(editClicked({ courseId: id, text: "update", course: cData }));
   };
 
@@ -132,18 +133,10 @@ function GetAllCourses() {
             </tbody>
           </table>
         </div>
-        <div
-          style={{
-            font: "message-box",
-            color: "blue",
-            fontFamily: "sans-serif",
-            fontSize: "13px",
-            margin: "10px",
-          }}
-        >
+        <div>
           {showPopup && (
             <div>
-              <Modal message={msg} />
+              <ErrorPopup message={msg} />
             </div>
           )}
         </div>

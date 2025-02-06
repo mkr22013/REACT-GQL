@@ -29,6 +29,7 @@ export const courseSlice = createSlice({
   },
 });
 
-export const { updateCourse, editClicked } = courseSlice.actions;
+export const { updateCourse, editClicked, setMessagePopupState } =
+  courseSlice.actions;
 
 export default courseSlice.reducer;

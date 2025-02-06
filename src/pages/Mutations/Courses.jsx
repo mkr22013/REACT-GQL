@@ -10,7 +10,8 @@ import {
 } from "../../graphqlQueries/CoursesQueries";
 import { useSelector, useDispatch } from "react-redux";
 import { editClicked } from "../Features/Courses/courseSlice";
-import Modal from "../Popup/Popup";
+import SuccessModal from "../Popup/Popup";
+import ErrorPopup from "../errorpopup/ErrorPopup";
 
 export default function Courses() {
   const {
@@ -26,6 +27,7 @@ export default function Courses() {
   const dispatch = useDispatch();
   const [msg, setMsg] = useState("");
   const [showPopup, setShowPopup] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   let cName = "";
   let cSubject = "";
@@ -40,6 +42,7 @@ export default function Courses() {
     },
     onError: (error) => {
       console.error("[Courses.createCourse] error", error);
+      throw error;
     },
   });
 
@@ -56,6 +59,7 @@ export default function Courses() {
     },
     onError: (error) => {
       console.error("[Courses.updateCourse] error", error);
+      throw error;
     },
   });
 
@@ -65,24 +69,38 @@ export default function Courses() {
     cInstructor = d.CourseInstructor;
 
     if (editStatus.text === " " || editStatus.text === undefined) {
-      await createCourse({
-        variables: {
-          name: cName,
-          subject: cSubject,
-          instructorId: cInstructor,
-        },
-      });
-      setShowPopup(true);
+      try {
+        setShowPopup(false);
+        setShowError(false);
+        await createCourse({
+          variables: {
+            name: cName,
+            subject: cSubject,
+            instructorId: cInstructor,
+          },
+        });
+        setShowPopup(true);
+      } catch (error) {
+        setShowError(true);
+        throw error;
+      }
     } else {
-      await updateCourse({
-        variables: {
-          id: editStatus.courseId,
-          name: cName,
-          subject: cSubject,
-          instructorId: cInstructor,
-        },
-      });
-      setShowPopup(true);
+      try {
+        setShowPopup(false);
+        setShowError(false);
+        await updateCourse({
+          variables: {
+            id: editStatus.courseId,
+            name: cName,
+            subject: cSubject,
+            instructorId: cInstructor,
+          },
+        });
+        setShowPopup(true);
+      } catch (error) {
+        setShowError(true);
+        throw error;
+      }
     }
   };
 
@@ -123,7 +141,7 @@ export default function Courses() {
           />
           <label
             htmlFor="floating_name"
-            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-80 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-400 transform -translate-y-6 scale-80 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Course Name
           </label>
@@ -137,7 +155,7 @@ export default function Courses() {
           />
           <label
             htmlFor="floating_subject"
-            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-80 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-400 transform -translate-y-6 scale-80 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Subject
           </label>
@@ -151,7 +169,7 @@ export default function Courses() {
           />
           <label
             htmlFor="floating_instructor"
-            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-80 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-400 transform -translate-y-6 scale-80 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
           >
             Instructor
           </label>
@@ -166,9 +184,16 @@ export default function Courses() {
         ></div>
         <button
           type="submit"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-6"
         >
           Submit
+        </button>
+        <button
+          type="submit"
+          onClick={() => reset()}
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Reset
         </button>
       </form>
       <div>
@@ -176,7 +201,12 @@ export default function Courses() {
       </div>
       {showPopup && (
         <div>
-          <Modal message={msg} />
+          <SuccessModal message={msg} />
+        </div>
+      )}
+      {showError && (
+        <div>
+          <ErrorPopup message="Something went wrong..." />
         </div>
       )}
     </div>
