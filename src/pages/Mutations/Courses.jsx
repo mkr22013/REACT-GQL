@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 import GetAllCourses from "../Queries/CoursesQuery";
-import Spinner from "../Spinner/Spinner";
 import { useState, useEffect } from "react";
 import {
   GET_COURSES,
@@ -11,6 +10,7 @@ import {
 } from "../../graphqlQueries/CoursesQueries";
 import { useSelector, useDispatch } from "react-redux";
 import { editClicked } from "../Features/Courses/courseSlice";
+import Modal from "../Popup/Popup";
 
 export default function Courses() {
   const {
@@ -20,68 +20,61 @@ export default function Courses() {
     setValue,
     formState: { isSubmitSuccessful },
   } = useForm();
+
   const editStatus = useSelector((state) => state.editStatus);
   const course = useSelector((state) => state.course);
   const dispatch = useDispatch();
   const [msg, setMsg] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
 
   let cName = "";
   let cSubject = "";
   let cInstructor = "";
 
-  const [createCourse, { data, loading, error }] = useMutation(CREATE_COURSE, {
+  const [createCourse] = useMutation(CREATE_COURSE, {
     client: COURSE_CLIENT,
     refetchQueries: [{ query: GET_COURSES }],
     awaitRefetchQueries: true,
     onCompleted: () => {
-      setMsg("Record successfully created...");
+      setMsg("Record Successfully Created");
     },
     onError: (error) => {
       console.error("[Courses.createCourse] error", error);
     },
   });
 
-  const [updateCourse, { uData, uLoading, uError }] = useMutation(
-    UPDATE_COURSE,
-    {
-      client: COURSE_CLIENT,
-      refetchQueries: [{ query: GET_COURSES }],
-      awaitRefetchQueries: true,
-      onCompleted: () => {
-        setMsg("Record successfully updated...");
+  const [updateCourse] = useMutation(UPDATE_COURSE, {
+    client: COURSE_CLIENT,
+    refetchQueries: [{ query: GET_COURSES }],
+    awaitRefetchQueries: true,
+    onCompleted: (data) => {
+      if (data) {
+        setMsg("Record Successfully Updated");
         //reset the cache
         dispatch(editClicked({ courseId: "", text: " " }));
-      },
-      onError: (error) => {
-        console.error("[Courses.updateCourse] error", error);
-      },
-    }
-  );
+      }
+    },
+    onError: (error) => {
+      console.error("[Courses.updateCourse] error", error);
+    },
+  });
 
-  const onSubmit = (d) => {
+  const onSubmit = async (d) => {
     cName = d.CourseName;
     cSubject = d.CourseSubject;
     cInstructor = d.CourseInstructor;
 
     if (editStatus.text === " " || editStatus.text === undefined) {
-      createCourse({
+      await createCourse({
         variables: {
           name: cName,
           subject: cSubject,
           instructorId: cInstructor,
         },
       });
-
-      if (loading)
-        return (
-          <div>
-            <Spinner />
-          </div>
-        );
-
-      if (error) return <div>something went wrong during create....</div>;
+      setShowPopup(true);
     } else {
-      updateCourse({
+      await updateCourse({
         variables: {
           id: editStatus.courseId,
           name: cName,
@@ -89,15 +82,7 @@ export default function Courses() {
           instructorId: cInstructor,
         },
       });
-
-      if (uLoading)
-        return (
-          <div>
-            <Spinner />
-          </div>
-        );
-
-      if (uError) return <div>something went wrong during update....</div>;
+      setShowPopup(true);
     }
   };
 
@@ -178,9 +163,7 @@ export default function Courses() {
             fontFamily: "sans-serif",
             fontSize: "13px",
           }}
-        >
-          {(data || uData) && <p>{msg}</p>}
-        </div>
+        ></div>
         <button
           type="submit"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -188,10 +171,14 @@ export default function Courses() {
           Submit
         </button>
       </form>
-
       <div>
         <GetAllCourses />
       </div>
+      {showPopup && (
+        <div>
+          <Modal message={msg} />
+        </div>
+      )}
     </div>
   );
 }

@@ -37,7 +37,10 @@ function Character() {
                 Episode Details
               </h3>
             </div>
-            <div className="mt-12 shadow-sm border rounded-lg overflow-x-auto">
+            <div
+              className="mt-12 shadow-sm border rounded-lg overflow-x-auto"
+              style={{ borderColor: "blue" }}
+            >
               <table className="w-full table-auto text-sm text-left">
                 <thead className="bg-gray-50 text-gray-600 font-medium border-b">
                   <tr>

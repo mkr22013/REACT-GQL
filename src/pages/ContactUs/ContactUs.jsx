@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import Modal from "../Popup/Popup";
 
 function ContactUs() {
-  const [email, setEmail] = useState();
+  const [msg, setMsg] = useState();
+  const [showPopup, setShowPopup] = useState(false);
   function SendEmail() {
-    setEmail("Message has been sent successfully");
+    setMsg("Message has been sent successfully");
+    setShowPopup(true);
   }
   return (
     <div className="max-w-7xl mx-auto p-4 md:p-8">
@@ -65,9 +68,7 @@ function ContactUs() {
               fontSize: "13px",
               margin: "10px",
             }}
-          >
-            <h2>{email}</h2>
-          </div>
+          ></div>
         </div>
 
         <div className="space-y-8">
@@ -165,6 +166,13 @@ function ContactUs() {
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        {showPopup && (
+          <div>
+            <Modal message={msg} />
+          </div>
+        )}
       </div>
     </div>
   );

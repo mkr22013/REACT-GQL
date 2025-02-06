@@ -9,11 +9,13 @@ import {
 } from "../../graphqlQueries/CoursesQueries";
 import { useDispatch } from "react-redux";
 import { editClicked } from "../Features/Courses/courseSlice";
+import Modal from "../Popup/Popup";
 
 function GetAllCourses() {
-  const { error, data, loading } = getCourses();
   const [msg, setMsg] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
 
+  const { error, data, loading } = getCourses();
   const dispatch = useDispatch();
 
   const [deleteCourse] = useMutation(DELETE_COURSE, {
@@ -21,7 +23,7 @@ function GetAllCourses() {
     refetchQueries: [{ query: GET_COURSES }],
     awaitRefetchQueries: true,
     onCompleted: () => {
-      setMsg("Record successfully deleted...");
+      setMsg("Record Successfully Deleted");
     },
     onError: (error) => {
       console.error("[GetAllCourses.deleteCourse] error", error);
@@ -29,12 +31,12 @@ function GetAllCourses() {
   });
 
   function DeleteCourse(id) {
-    //set previous message clear
     deleteCourse({
       variables: {
         id: id,
       },
     });
+    setShowPopup(true);
   }
 
   const EditCourse = (id) => {
@@ -139,7 +141,11 @@ function GetAllCourses() {
             margin: "10px",
           }}
         >
-          {data && <p>{msg}</p>}
+          {showPopup && (
+            <div>
+              <Modal message={msg} />
+            </div>
+          )}
         </div>
       </div>
     </div>
