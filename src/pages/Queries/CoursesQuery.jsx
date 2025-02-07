@@ -54,7 +54,24 @@ function GetAllCourses() {
       </div>
     );
 
-  if (error) return <div>Something went wrong....</div>;
+  if (error)
+    return (
+      <div style={{ width: "100vh", textAlign: "center", marginTop: "50px" }}>
+        <p
+          style={{
+            fontFamily: "sans-serif",
+            textAlign: "center",
+            border: "2px solid",
+            color: "red",
+            fontSize: "16px",
+            margin: "20px",
+            borderRadius: "10px",
+          }}
+        >
+          {error.message}. Please try again by rereshing the page.
+        </p>
+      </div>
+    );
 
   return (
     <div>
