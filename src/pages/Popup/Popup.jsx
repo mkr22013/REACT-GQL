@@ -53,7 +53,7 @@ function SuccessModal(props) {
             Information
           </h3>
           <div className="mt-2">
-            <p className="text-sm text-gray-500">{props.message}</p>
+            <p className="text-m text-blue-500 mt-5">{props.message}</p>
           </div>
         </div>
         <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
